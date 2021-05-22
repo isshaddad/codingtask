@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,7 +30,6 @@ public class MainActivity extends AppCompatActivity{
     private ListView lv;
     String name,companyname;
     JSONObject company;
-
     private static String JSON_URL="https://jsonplaceholder.typicode.com/users";
 
     ArrayList<HashMap<String, String>> usersList;
@@ -49,9 +49,14 @@ public class MainActivity extends AppCompatActivity{
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent=new Intent(view.getContext(), Activity_SingleUser.class);
+                Intent intent = new Intent(MainActivity.this, Activity_SingleUser.class);
+                intent.putExtra("Index", position);
+
                 startActivity(intent);
+
             }
+
+
         });
 
 
@@ -60,7 +65,6 @@ public class MainActivity extends AppCompatActivity{
     public class GetData extends AsyncTask<String, String, String>{
 
         String current="";
-        String data="";
 
 
         @Override
@@ -127,6 +131,7 @@ public class MainActivity extends AppCompatActivity{
                     companyname="Company: " +company.getString("name");
 
 
+
                     HashMap <String,String> users=new HashMap<>();
 
                     users.put("name",name);
@@ -145,5 +150,7 @@ public class MainActivity extends AppCompatActivity{
 
         }
     }
+
+
 }
 
