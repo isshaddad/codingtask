@@ -49,8 +49,12 @@ public class MainActivity extends AppCompatActivity{
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(MainActivity.this, Activity_SingleUser.class);
-                intent.putExtra("Index", position);
+
+
+
+                Intent intent = new Intent(view.getContext(), Activity_SingleUser.class);
+                intent.putExtra("Index",position);
+
 
                 startActivity(intent);
 
