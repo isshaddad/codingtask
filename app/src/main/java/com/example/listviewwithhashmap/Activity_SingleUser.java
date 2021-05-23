@@ -3,8 +3,13 @@ package com.example.listviewwithhashmap;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.location.Location;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -23,28 +28,29 @@ import java.util.HashMap;
 
 public class Activity_SingleUser extends AppCompatActivity{
     TextView newtext3,newtext4,newtext5,newtext6;
-    String name, companyname, email,fulladdress;
+    TextView newtext8;
+    String name, companyname, email,fulladdress,coordinates;
     private static String JSON_URL="https://jsonplaceholder.typicode.com/users";
-    JSONObject company,address;
+    JSONObject company,address,geo;
 
-    //Bundle extras = getIntent().getExtras();
-   // int temp = extras.getInt("id");
-    //= (TextView) findViewById(R.id.textView3);
-   // String sessionId = getIntent().getStringExtra("EXTRA_SESSION_ID");
-    //Intent mIntent=getIntent();
-    //int position=mIntent.getIntExtra("Index",0);
-   // int position=getIntent().getExtras().getInt("Index");
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity__single_user);
 
-       // int position=getIntent().getExtras().getInt("Index");
-        //newtext=findViewById(R.id.textView3);
-        //newtext.setText("temp");
+
 
         FetchData fetchData = new FetchData();
         fetchData.execute();
+        /*button=findViewById(R.id.location);
+        button.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent=new Intent (Intent.ACTION_VIEW, Uri.parse(""))
+            }
+        });*/
 
 
     }
@@ -130,7 +136,13 @@ public class Activity_SingleUser extends AppCompatActivity{
                     fulladdress="Address: " +address.getString("street")+", "+address.getString("suite")+", "+address.getString("city")+", "+address.getString("zipcode");
                     newtext6=findViewById(R.id.textView6);
                     newtext6.setText(fulladdress);
+                   // newtext8=findViewById(R.id.textView8);
+                    //newtext8.setText("hi");
+                    geo = (JSONObject) address.get("geo");
 
+                    coordinates="Location on a map: \n"+"latitude: "+geo.getString("lat")+"\n "+"longitude: "+geo.getString("lng");
+                    newtext8=findViewById(R.id.textView8);
+                    newtext8.setText(coordinates);
 
 
                 }
@@ -138,10 +150,6 @@ public class Activity_SingleUser extends AppCompatActivity{
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
-            //ListAdapter adapter= new SimpleAdapter(MainActivity.this, usersList, R.layout.row_layout, new String[] {"name","companyname"}, new int[] {R.id.textView,R.id.textView2});
-
-            //lv.setAdapter(adapter);
 
         }
     }
